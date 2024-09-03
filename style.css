@@ -38,9 +38,7 @@ height: 100vh; /* Full viewport height */
   justify-content: center;
   align-items: center;  
 }
-.bottom-buttons{
-   
-}
+
 button{
     width: 70px;
     height: 70px;
@@ -55,14 +53,11 @@ button{
    border: none;
 }
 
-.top-button{
+.function-button{
     background-color: darkcyan;
     border: none;
 }
 
-.bottom-buttons{
-   
-}
 .bottom-button{
     background-color: salmon;
     width: 90px;
