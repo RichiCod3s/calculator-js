@@ -58,7 +58,7 @@ button{
     border: none;
 }
 
-.bottom-button{
+.bottom-button, #equals{
     background-color: salmon;
     width: 90px;
     border-radius: 15px;
