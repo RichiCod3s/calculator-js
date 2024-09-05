@@ -161,7 +161,7 @@ function operate(operator, numOne, numTwo){
       
       calculated =false;
       // display half of the calculations - awaiting second number
-      display.value = display.value + operator;   
+      display.value = display.value;     
    })
    });
 
