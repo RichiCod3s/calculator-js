@@ -4,6 +4,7 @@ let operator = null; // Stores the current operator (+, -, *, /)
 let firstNumberInput = false; // Tracks whether the first number has been input
 let secondNumberInput = false; //// Tracks whether the second number is being input
 let calculated =false; // flag: number button pressed with a calculation, it resets the value.
+let decimalEntered = false; // flag: is decimal has already been pressed;
 
 const display = document.getElementById("display");
 const numberButtons = document.querySelectorAll('.number, .bottom-button');
@@ -38,16 +39,16 @@ function operate(operator, numOne, numTwo){
     switch(operator){
   
         case "+":
-                display.value = add(numOne,numTwo);
+                return add(numOne,numTwo);
                 break;
         case "-":
-                display.value = subtract(numOne,numTwo)
+                return subtract(numOne,numTwo)
                 break;
         case "/":
-                display.value = divide(numOne,numTwo)
+               return divide(numOne,numTwo)
                 break;
         case "*":
-                display.value = multiply(numOne, numTwo);
+                return multiply(numOne, numTwo);
                 break;
     }
    
@@ -59,13 +60,15 @@ function operate(operator, numOne, numTwo){
             // press number with a calulation, the value is reset.
             if(calculated || display.value == "0"){ 
                 display.value = '';
+                calculated = false;
             }
 
             if(display.value == '.' || display.value == '0.' || display.value == '0'){
                 display.value = "0.";
+                decimalEntered = true;
             }
+          
             
-
             if(firstNumberInput == true && secondNumberInput == false){
                 display.value ="";
                 secondNumberInput = true;
@@ -73,10 +76,15 @@ function operate(operator, numOne, numTwo){
 
             if(button.dataset.value == '.'){
                 //decimal functionality
-                if(display.value == '0.' || display.value == 0){
+                if(display.value == '0.' || display.value == 0 || display.value =="."){
                     display.value = "0.";
+                    decimalEntered = true;
+                
                 }else{
+                    if(!decimalEntered){
                     display.value += button.dataset.value;
+                    decimalEntered = true;
+                    }
                 }
             }else{
                 display.value += parseFloat(button.dataset.value);
@@ -100,6 +108,7 @@ function operate(operator, numOne, numTwo){
                 firstNumberInput = false;
                 secondNumberInput = false;
                 calculated = false;
+                decimalEntered = false;
                 display.value = 0;
                 break;
             case "+/-":
@@ -122,7 +131,15 @@ function operate(operator, numOne, numTwo){
     if(!firstNumberInput){
         firstNumber = parseFloat(display.value);
         firstNumberInput =true;  
-      }
+        decimalEntered = false;
+      }else if (secondNumberInput) {
+        secondNumber = parseFloat(display.value);
+        firstNumber = operate(operator, firstNumber, secondNumber);
+        display.value = firstNumber;
+        secondNumberInput = false;
+        decimalEntered = false;
+    }
+
       
       // sets operator 
       switch(button.dataset.value){
@@ -141,6 +158,7 @@ function operate(operator, numOne, numTwo){
                   break;
       }
 
+      
       calculated =false;
       // display half of the calculations - awaiting second number
       display.value = display.value + operator;   
@@ -155,7 +173,7 @@ function operate(operator, numOne, numTwo){
     }
 
     if(firstNumberInput == true && secondNumberInput == true){
-         operate(operator, firstNumber, secondNumber);
+         display.value = operate(operator, firstNumber, secondNumber);
          firstNumberInput =false;
          secondNumberInput=false;
          calculated = true; // if number pressed after sum - display is reset
