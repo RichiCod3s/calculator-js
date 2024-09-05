@@ -10,6 +10,7 @@ const numberButtons = document.querySelectorAll('.number, .bottom-button');
 const functionButtons = document.querySelectorAll('.function-button');
 const operatorButtons = document.querySelectorAll('.operator');
 const equals = document.querySelector("#equals");
+display.disabled=true; 
 display.value = 0;
 
 //calculation functions
@@ -157,6 +158,6 @@ function operate(operator, numOne, numTwo){
          operate(operator, firstNumber, secondNumber);
          firstNumberInput =false;
          secondNumberInput=false;
-         calculated = true; // number pressed after sum - display is reset
+         calculated = true; // if number pressed after sum - display is reset
     }
    });
